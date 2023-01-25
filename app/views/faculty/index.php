@@ -15,95 +15,69 @@
         <div class="row">
           <div class="col-md-2 bg-success" style="height:80vh">
             <div class="text-light text-center pt-5 pb-5">
-              <p>User</p>
               <nav class="navbar justify-content-center">
                 <ul class="navbar-nav" >
                   <li class="nav-item px-5 pt-2 pb-2">
-                    <a href=""class="nav-link text-light"> Dashboard</a>
+                    <form action="<?=site_url('Faculty/myDash')?>" method="post">
+                      <input type="hidden"  name="facultyNo"value="<?=$fac_no?>">
+                      <input type="submit"  value="Dashboard" class="btn btn-success ">
+                    </form>
                   </li>
                   <li class="nav-item px-4  pb-2">
-                    <a href=""class="nav-link text-light"> My Class</a>
+                    <form action="<?=site_url('Faculty/myadvisory')?>" method="post">
+                      <input type="hidden"  name="facultyNo"value="<?=$fac_no?>">
+                      <input type="submit" value="My advisory" class="btn btn-success">
+                    </form>
                   </li>
-
                 </ul>
               </nav>
-              <a href="" class="nav-link mb-5">Change password</a>
-              <a href="" class="text-danger">Logout</a>
+              <nav class="mt-5">
+                <i>In session:</i>
+                <p><?=$fac_role?></p>
+                <b><?=$fac_fname?> <?=$fac_lname?></b>
+              
+              </nav>
+              <a href="<?=site_url('Access/logoutTeacher')?>" class="text-danger">Logout</a>
             </div>
           </div>
-          <div class="col-md-10" style="height:80vh">
+          <div class="col-md-10 px-5" style="height:80vh">
             <div class="container">
-              <h1 class="mx-5 mt-5">Dashboard</h1>
-
-              <div class="row">
-                <div class="col-md-12 pb-2 px-5">
-                <div>
-                  <canvas id="myChart"  ></canvas>
+              <h1 class="mt-5 mb-4">Dashboard</h1>
+             <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                          <div class="col-md-5 mx-3 text-center bg-warning rounded p-3">
+                                <h5><?=$profile['fac_advisory']?> Students</h5>
+                                <h1> <?=$student['studcount']?></h1>
+                              </div>
+                        <div class="col-md-5 mx-3 text-center  bg-success rounded p-3">
+                        <h5>Active Students</h5>
+                                <h1> <?=$active['Active']?></h1>
+                        </div>
+                      </div>
                 </div>
-                </div>
-                <div class="row mx-5">
-                  <div class="col-md-3 bg-success text-center mx-3 mt-3 p-3 rounded">
-                    <h6 class="text-light">Total Students</h6>
-                    <h1 class="text-light">100</h1>
-                  </div>
-                  <div class="col-md-3  bg-warning text-center  mx-3 mt-3 p-3 rounded ">
-                  <h6 class="text-success">Total Passed Students</h6>
-                  <h1 class="text-secondary">50</h1>
-                  </div>
-                  <div class="col-md-3  bg-warning text-center  mx-3 mt-3 p-3 rounded">
-                  <h6 class="text-success">Total Failed Students</h6>
-                  <h1 class="text-secondary">50</h1>
-                  </div>
-                </div>
+             </div>
+             <div class="row">
+              <div class="col-md-3 mx-4 mt-3 text-center bg-success rounded p-3">
+                <h5>Graded Students</h5>
+                <?=$graded?>
               </div>
+              <div class="col-md-3 mx-4 mt-3 text-center bg-warning rounded p-3">
+                <h5>Passed Students</h5>
+                <?=$remarkspassed['Passed']?>
+              </div>
+              <div class="col-md-3 mx-4 mt-3 text-center bg-danger rounded p-3">
+                <h5>Failed Students</h5>
+                <?=$remarksfailed['Failed']?>
+              </div>
+             </div>
+
+             
             </div>
           </div>
         </div>
 
       </div>
     </div>
- 
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-  const ctx = document.getElementById('myChart');
-
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-      datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.0/chart.min.js" integrity="sha512-qKyIokLnyh6oSnWsc5h21uwMAQtljqMZZT17CIMXuCQNIfFSFF4tJdMOaJHL9fQdJUANid6OB6DRR0zdHrbWAw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
 </body>
 </html>

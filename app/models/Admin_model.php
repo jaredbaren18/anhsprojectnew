@@ -2,6 +2,26 @@
     defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
     class Admin_model extends Model {
+        // DASHBOARD DATAS 
+        public function allStudentsCount()
+        {
+            return $this->db->table('tblstudent')->select_count('studentID','totalstudents')->get();
+        }
+        public function allFacultyCount()
+        {
+            return $this->db->table('tblfaculty')->select_count('facultyID','totalfaculty')->get();
+        }
+        public function totalAcounts()
+        {
+            $students=$this->db->table('tblstudent')->select_count('studentID','totalstudents')->get();
+            $faculty=$this->db->table('tblfaculty')->select_count('facultyID','totalfaculty')->get();
+            $overall=$students['totalstudents']+$faculty['totalfaculty'];
+            return $overall;
+        }
+
+
+
+        // FACULTY MODELS 
         public function employeesAccounts()
         {
             return $this->db->table('tblfaculty')->get_all();
@@ -66,6 +86,70 @@
             return $this->db->table('tblfaculty')->where('facultyID',$facultyID)->delete();
         }
 
+        // END OF FACULTY MODELS 
+        // START OF STUDENT MODELS 
+        public function studentAccount()
+        {
+            return $this->db->table('tblstudent')->get_all();
+        }
+        public function matchStudID($id)
+        {
+            return $this->db->table('tblstudent')->where('studentID',$id)->get();
+        }
+        public function match_stud_data($stud_lrn,$stud_fname,$stud_mname,$stud_lname)
+        {
+            $data=
+            [
+                'stud_lrn'=>$stud_lrn,
+                'stud_fname'=>$stud_fname,
+                'stud_mname'=>$stud_mname,
+                'stud_lname'=>$stud_lname
+            ];
+            return $this->db->table('tblstudent')->where($data)->get();
+        }
+        public function insertStudent($stud_lrn,$stud_fname,$stud_mname,$stud_lname,$stud_age,$stud_gender,$stud_birthday,$stud_address,$stud_yearlevel,$stud_section,$stud_role,$stud_username,$stud_password)
+        {
+            $data=[
+                'stud_lrn'=>$stud_lrn,
+                'stud_fname'=>$stud_fname,
+                'stud_mname'=>$stud_mname,
+                'stud_lname'=>$stud_lname,
+                'stud_age'=>$stud_age,
+                'stud_gender'=>$stud_gender,
+                'stud_birthday'=>$stud_birthday,
+                'stud_address'=>$stud_address,
+                'stud_yearlevel'=>$stud_yearlevel,
+                'stud_section'=>$stud_section,
+                'stud_role'=>$stud_role,
+                'stud_username'=>$stud_username,
+                'stud_password'=>$stud_password
+            ];
+            return $this->db->table('tblstudent')->insert($data);
+        }
+        public function updateStudent($studentID,$stud_lrn,$stud_fname,$stud_mname,$stud_lname,$stud_age,$stud_gender,$stud_birthday,$stud_address,$stud_yearlevel,$stud_section,$stud_role,$stud_username,$stud_password)
+        {
+            $data=[
+                'stud_lrn'=>$stud_lrn,
+                'stud_fname'=>$stud_fname,
+                'stud_mname'=>$stud_mname,
+                'stud_lname'=>$stud_lname,
+                'stud_age'=>$stud_age,
+                'stud_gender'=>$stud_gender,
+                'stud_birthday'=>$stud_birthday,
+                'stud_address'=>$stud_address,
+                'stud_yearlevel'=>$stud_yearlevel,  
+                'stud_section'=>$stud_section,
+                'stud_role'=>$stud_role,
+                'stud_username'=>$stud_username,
+                'stud_password'=>$stud_password
+            ];
+            return $this->db->table('tblstudent')->where('studentID',$studentID)->update($data);
+        }
+        public function deleteStudent($studID)
+        {
+            return $this->db->table('tblstudent')->where('studentID',$studID)->delete();
+        }
+        // END OF STUDENT MODELS 
       
 
 
@@ -122,180 +206,8 @@
             return $this->db->table('tblstudent')->select_count('status','activeStudent')->where('status','Online')->get();
         }
         //Join table
-        public function getStudentIngo($studentID)
-        {
-            return $this->db->table('tblstudent')->where('studentID',$studentID)->get();
-
-        }
-        public function matchInfo($stud_lrn)
-        {
-            return $this->db->table('tblgrade')->where('lrn',$stud_lrn)->get_all();
-         
 
 
-        } 
-
-
-
-
-
-
-
-        public function deleteID($facultyID){
-            return $this->db->table('tblfaculty')->where('facultyID',$facultyID)->delete();
-        }
-        // Get all records of tbl faculty 
-        public function getAllFaculty()
-        {
-            return $this->db->table('tblfaculty')->get_all();
-        }
-        // Insert new record 
-       
-        public function getfacultyID($facultyID)
-        {
-            return $this->db->table('tblfaculty')->where('facultyID',$facultyID)->get();
-        }
-    
-        // Update data using current faculty id
-        public function updateFaculty($facultyID,$facultyNo,$fname,$mname,$lname,$age,$birthday,$gender,$role,$username,
-        $password,$advisory,$yearlevel
-    )
-    {
-        $data=[
-            'facultyNo'=>$facultyNo,
-            'fac_fname'=>$fname,
-            'fac_mname'=>$mname,
-            'fac_lname'=>$lname,
-            'fac_age'=>$age,
-            'fac_birthday'=>$birthday,
-            'fac_gender'=>$gender,
-            'fac_role'=>$role,
-            'fac_username'=>$username,
-            'fac_password'=>password_hash($password),
-            'fac_advisory'=>$advisory,
-            'fac_yearlevel'=>$yearlevel
-            
-        ];
-        return $this->db->table('tblfaculty')->where('facultyID',$facultyID)->update($data);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //test join
-    public function jointable()
-    {
-        return $this->db->table('tblstudent as s')->left_join('tblfaculty as f', 's.facultyID=f.facultyID')->get_all();
-    }
-
-
-
-    // get all student records 
-    public function getAllStudents()
-    {
-        return $this->db->table('tblstudent')->limit(10)->get_all();;
-    }
-    // insert student record
-    public function insertStudent($lrn,$fname,$mname,$lname,
-    $age,$gender,$birthday,$address,$yearlevel,$section,$role,
-    $username,$password,$facultyID)
-    {
-        $data=[
-            'stud_lrn'=>$lrn,
-            'stud_fname'=>$fname,
-            'stud_mname'=>$mname,
-            'stud_lname'=>$lname,
-            'stud_age'=>$age,
-            'stud_gender'=>$gender,
-            'stud_birthday'=>$birthday,
-            'stud_address'=>$address,
-            'stud_yearlevel'=>$yearlevel,
-            'stud_section'=>$section,
-            'stud_role'=>$role,
-            'stud_username'=>$username,
-            'stud_password'=>password_hash($password),
-            'facultyID'=>$facultyID,
-        ];
-        return $this->db->table('tblstudent')->insert($data);
-    }
-    //get single ID
-    public function getstudentID($studentID)
-    {
-        return $this->db->table('tblstudent')->where('studentID',$studentID)->get();
-    }
-    // delete student record
-    public function deleteStudentID($studentID)
-    {
-        return $this->db->table('tblstudent')->where('studentID',$studentID)->delete();
-    }
-    // update student data 
-    public function updateStudent($studentID,$lrn,$fname,$mname,$lname,
-    $age,$gender,$birthday,$address,$yearlevel,$section,$role,
-    $username,$password)
-    {
-        $data=[
-            'stud_lrn'=>$lrn,
-            'stud_fname'=>$fname,
-            'stud_mname'=>$mname,
-            'stud_lname'=>$lname,
-            'stud_age'=>$age,
-            'stud_gender'=>$gender,
-            'stud_birthday'=>$birthday,
-            'stud_address'=>$address,
-            'stud_yearlevel'=>$yearlevel,
-            'stud_section'=>$section,
-            'stud_role'=>$role,
-            'stud_username'=>$username,
-            'stud_password'=>password_hash($password)
-        ];
-        // return $this->db->table('tblstudent as s')->join('tblfaculty as f', 's.facultyID=f.facultyID')->where('student',$studentID)->update($data);
-        return $this->db->table('tblstudent')->where('studentID',$studentID)->update($data);
-    }
 
     }
     ?>

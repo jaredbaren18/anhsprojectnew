@@ -17,18 +17,23 @@
       <div class="col-md-2 bg-success" style="height:100vh">
       
       <nav class="justify-content-center text-center">
-        <ul class="nav-link ">
+        <ul class="nav-link mt-5 pt-5 ">
           <li class="text-light p-2"><a href="<?=site_url('Admin/index')?>" class="nav-link">Dashboard</a></li>
           <li>
-          <div class="dropdown-center">
+          <div class="dropdown-cente mb-5">
             <a class="btn btn-success dropdown-toggle text-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               Accounts
 </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="<?=site_url('Admin/facutltyAccounts')?>">Faculty</a></li>
-              <li><a class="dropdown-item" href="#">Student</a></li>
+            <li><a class="dropdown-item" href="<?=site_url('Admin/facutltyAccounts')?>">Faculty</a></li>
+              <li><a class="dropdown-item" href="<?=site_url('Admin/studentAccounts')?>">Student</a></li>
+                  
             </ul>
           </div>
+          <h6 class="text-light">In session:</h6>
+          <h6 class="text-light"><?=$fac_role?></h6>
+          <h5 class="text-light"><?=$fac_fname?> <?=$fac_lname?></h5>
+          <li><a class="btn  btn-success" href="<?=site_url('Access/logoutAdmin')?>">Logout</a></li>
           </li>
         </ul>
       </nav>
@@ -38,7 +43,7 @@
       <div class="col-md-10" style="height:100vh">
       <div class="row">
         <div class="col-md-11 mx-3 mt-3">
-         <div class="card" style="height:70vh">
+         <div class="card" >
           <div class="card-content">
             <div class="card-header">
             <h1>Employees Accounts</h1>
@@ -127,7 +132,7 @@
         <div class="card">
           <div class="card-content">
             <div class="card-body">
-            <h4 class="text-center">Mr. <span id="profileName"></span>  Profile</h4>
+            <h4 class="text-center">It's <span id="profileName"></span>  Profile</h4>
             <div class="row">
               <div class="col-md-5">
                 <p class="mt-2 mb-2">Faculty ID:</p>
@@ -168,7 +173,6 @@
       <div class="modal-footer">
         <button id="editProBtn" class="btn btn-success">Edit</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Understood</button>
       </div>
     </div>
   </div>
@@ -214,9 +218,17 @@
                   <input type="text"  name="fac_mname" class="form-control mb-2">
                   <input type="text" name="fac_lname" class="form-control mb-2">
                   <input type="text" name="fac_age" class="form-control mb-2">
-                  <input type="text"  name="fac_gender" class="form-control mb-2">
+                  <select name="fac_gender" class="form-control mb-2">
+                    <option value="">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
                   <input type="date"  name="fac_birthday" class="form-control mb-2">
-                  <input type="text" name="fac_role" class="form-control mb-2">
+                  <select name="fac_role" class="form-control mb-2">
+                    <option value="">Select</option>
+                    <option value="Teacher">Teacher</option>
+                    <option value="Administrator">Administrator</option>
+                  </select>
                   <input type="text"  name="fac_advisory" class="form-control mb-2">
                   <input type="text"  name="fac_yearlevel" class="form-control mb-2">
                   <input type="text"  name="fac_username" class="form-control mb-2" >
@@ -281,7 +293,11 @@
                   <input type="text" id="editfac_mname" name="fac_mname" class="form-control mb-2">
                   <input type="text" id="editfac_lname" name="fac_lname" class="form-control mb-2">
                   <input type="text" id="editfac_age" name="fac_age" class="form-control mb-2">
-                  <input type="text" id="editfac_gender" name="fac_gender" class="form-control mb-2">
+                  <select name="fac_gender" id="editfac_gender"  class="form-control mb-2">
+                    <option value="">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
                   <input type="date" id="editfac_birthday" name="fac_birthday" class="form-control mb-2">
                   <input type="text" id="editfac_role" name="fac_role" class="form-control mb-2">
                   <input type="text" id="editfac_advisory" name="fac_advisory" class="form-control mb-2">
@@ -322,7 +338,7 @@ $(document).on('submit', '#insertFacultyForm', function(e){
 
             $.ajax({
                 type: "POST",
-                url: "http://localhost/anhs/Admin/insertFac",
+                url: "http://localhost/anhsprojectnew/Admin/insertFac",
                 data: formData,
                 processData: false,
                 contentType: false,
@@ -375,7 +391,7 @@ $(document).on('submit', '#insertFacultyForm', function(e){
         console.log(facultyID);
         $.ajax({
             type: "POST",
-            url: "http://localhost/anhs/Admin/viewFacultyProfile",
+            url: "http://localhost/anhsprojectnew/Admin/viewFacultyProfile",
             data: id, 
             // processData: false,
             success: function (response) {
@@ -387,7 +403,7 @@ $(document).on('submit', '#insertFacultyForm', function(e){
                     $('#facError').text(res.message);
                     
                 }else if(res.status == 200){
-                  
+
                     $('#editProBtn').val(res.emp.facultyID);
                     $('#profileName').text(res.emp.fac_fname);
                     $('#viewfacultyid').text(res.emp.facultyNo);
@@ -413,6 +429,55 @@ $(document).on('submit', '#insertFacultyForm', function(e){
 // END VIEW PROFILE 
 
 
+// EDIT VIEW PROFILE
+        
+                $(document).on('click', '#editProBtn', function () {
+
+                var facultyID = $(this).val();
+                const id = {
+                    'facultyID': facultyID,
+                };
+                console.log(facultyID);
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost/anhsprojectnew/Admin/viewFacultyProfile",
+                    data: id, 
+                    // processData: false,
+                    success: function (response) {
+
+                        var res = jQuery.parseJSON(response);
+                        console.log(res)
+                        if(res.status == 500) {
+                            $('#facError').removeClass('d-none');
+                            $('#facError').text(res.message);
+                            
+                        }else if(res.status == 200){
+                            $('#updateerror').addClass('d-none');
+                            $('#ediprofile').text(res.emp.fac_fname);
+                            $('#editfacultyID').val(res.emp.facultyID);
+                            $('#editfacultyNo').val(res.emp.facultyNo);
+                            $('#editfac_fname').val(res.emp.fac_fname);
+                            $('#editfac_mname').val(res.emp.fac_mname);
+                            $('#editfac_lname').val(res.emp.fac_lname);
+                            $('#editfac_age').val(res.emp.fac_age);
+                            $('#editfac_gender').val(res.emp.fac_gender);
+                            $('#editfac_birthday').val(res.emp.fac_birthday);
+                            $('#editfac_role').val(res.emp.fac_role);
+                            $('#editfac_advisory').val(res.emp.fac_advisory);
+                            $('#editfac_yearlevel').val(res.emp.fac_yearlevel);
+                            $('#editfac_username').val(res.emp.fac_username);
+                            $('#editfac_password').val(res.emp.fac_password);
+                            $('#editModal').modal('show');
+                        }
+
+                    }
+                });
+
+                });
+// EDN OF EDIT VIEW PROFILE 
+
+
+
 
              
         $(document).on('click', '.editBtn', function () {
@@ -424,7 +489,7 @@ $(document).on('submit', '#insertFacultyForm', function(e){
           console.log(facultyID);
           $.ajax({
               type: "POST",
-              url: "http://localhost/anhs/Admin/viewFacultyProfile",
+              url: "http://localhost/anhsprojectnew/Admin/viewFacultyProfile",
               data: id, 
               // processData: false,
               success: function (response) {
@@ -436,7 +501,8 @@ $(document).on('submit', '#insertFacultyForm', function(e){
                       $('#facError').text(res.message);
                       
                   }else if(res.status == 200){
-                     $('#ediprofile').text(res.emp.fac_fname);
+                      $('#updateerror').addClass('d-none');
+                      $('#ediprofile').text(res.emp.fac_fname);
                       $('#editfacultyID').val(res.emp.facultyID);
                       $('#editfacultyNo').val(res.emp.facultyNo);
                       $('#editfac_fname').val(res.emp.fac_fname);
@@ -466,7 +532,7 @@ $(document).on('submit', '#insertFacultyForm', function(e){
 
             $.ajax({
                 type: "POST",
-                url: "http://localhost/anhs/Admin/updateFaculty",
+                url: "http://localhost/anhsprojectnew/Admin/updateFaculty",
                 data: formData,
                 processData: false,
                 contentType: false,
@@ -481,12 +547,14 @@ $(document).on('submit', '#insertFacultyForm', function(e){
                        
 
                     }else if(res.status == 200){
-
+                        $('#updateerror').addClass('d-none');
                         $('#updatesuccess').removeClass('d-none');
+                        alert('Update successful.');
                         $('#updateerror').addClass('d-none');
                         $('#updatesuccess').text(res.message);
                         $('#editModal').modal('show');
                         $('#facultyTable').load(location.href + " #facultyTable");
+                       
                     }
             
                 }
@@ -502,7 +570,7 @@ $(document).on('submit', '#insertFacultyForm', function(e){
                 var facultyID = $(this).val();
                 $.ajax({
                     type: "POST",
-                    url: "http://localhost/anhs/Admin/delFaculty/",
+                    url: "http://localhost/anhsprojectnew/Admin/delFaculty/",
                     data: {
                         'delete_faculty': true,
                         'facultyID': facultyID

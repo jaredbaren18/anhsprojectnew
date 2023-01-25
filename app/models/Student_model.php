@@ -34,5 +34,17 @@ class Student_model extends Model {
         ];
         return $this->db->table('tblstudent')->insert($data);
     }
+    public function studentProfile($studentID)
+    {
+        return $this->db->table('tblstudent')->where('studentID',$studentID)->get();
+    }
+    public function deletestudentProfile($studentID)
+    {
+        return $this->db->table('tblstudent')->where('studentID',$studentID)->delete();
+    }
+    public function truncTable()
+    {
+        return $this->db-table('tblstudent')->delete();
+    }
 }
 ?>

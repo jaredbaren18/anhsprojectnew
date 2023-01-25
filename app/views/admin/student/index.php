@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ANHS| ADMIN| DASHBOARD </title>
+  <title>ANHS| STUDENT| RECORDS </title>
   <link rel="stylesheet" href="<?=base_url()?>/public/css/faculty.css">
   <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
   <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
@@ -17,18 +17,24 @@
       <div class="col-md-2 bg-success" style="height:100vh">
       
       <nav class="justify-content-center text-center">
-        <ul class="nav-link ">
+        <ul class="nav-link mt-5 pt-5 ">
           <li class="text-light p-2"><a href="<?=site_url('Admin/index')?>" class="nav-link">Dashboard</a></li>
           <li>
-          <div class="dropdown-center">
+          <div class="dropdown-cente mb-5">
             <a class="btn btn-success dropdown-toggle text-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               Accounts
 </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="<?=site_url('Admin/facutltyAccounts')?>">Faculty</a></li>
-              <li><a class="dropdown-item" href="#">Student</a></li>
+            <li><a class="dropdown-item" href="<?=site_url('Admin/facutltyAccounts')?>">Faculty</a></li>
+              <li><a class="dropdown-item" href="<?=site_url('Admin/studentAccounts')?>">Student</a></li>
+                  
             </ul>
           </div>
+          <h6 class="text-light">In session:</h6>
+          <h6 class="text-light"><?=$fac_role?></h6>
+          <h5 class="text-light"><?=$fac_fname?> <?=$fac_lname?></h5>
+
+          <li><a class="btn  btn-success" href="<?=site_url('Access/logoutAdmin')?>">Logout</a></li>
           </li>
         </ul>
       </nav>
@@ -38,7 +44,7 @@
       <div class="col-md-10" style="height:100vh">
       <div class="row">
         <div class="col-md-11 mx-3 mt-3">
-         <div class="card" style="height:70vh">
+         <div class="card">
           <div class="card-content">
             <div class="card-header">
             <h1>Students Accounts</h1>
@@ -56,25 +62,25 @@
               <div class="card mx-3 mt-2">
                 <div class="card-content">
                   <div class="card-body"style="height:70vh">
-                    <div id="facError" class="alert alert-danger d-none"></div>
-                    <div id="facSuccess" class="alert alert-success d-none"></div>
-                    <table id="facultyTable" class="table">
+                    <div id="studError" class="alert alert-danger d-none"></div>
+                    <div id="studSuccess" class="alert alert-success d-none"></div>
+                    <table id="studentsTable" class="table">
                       <thead class="table-warning text-center">
                         <th>No.</th>
-                        <th>Faculty ID</th>
+                        <th>LRN</th>
                         <th>Name</th>
                         <th>Actions</th>
                       </thead>
                       <tbody class="text-center">
-                        <?php foreach($faculty as $emp):?>
+                        <?php foreach($student as $stud):?>
                           <tr class="mt-3"> 
-                            <td><?=$emp['facultyID']?></td>
-                            <td><?=$emp['facultyNo']?></td>
-                            <td><?=$emp['fac_fname']?> <?=$emp['fac_mname']?> <?=$emp['fac_lname']?></td>
+                            <td><?=$stud['studentID']?></td>
+                            <td><?=$stud['stud_lrn']?></td>
+                            <td><?=$stud['stud_fname']?> <?=$stud['stud_mname']?> <?=$stud['stud_lname']?></td>
                             <td>
-                              <button class="viewBtn btn btn-success" value="<?=$emp['facultyID']?>">View</button>
-                              <button class="editBtn btn btn-success" value="<?=$emp['facultyID']?>">Edit</button>
-                              <button class="deleteBtn btn btn-danger" value="<?=$emp['facultyID']?>">Delete</button>
+                              <button class="viewBtn btn btn-success" value="<?=$stud['studentID']?>">View</button>
+                              <button class="editBtn btn btn-success" value="<?=$stud['studentID']?>">Edit</button>
+                              <button class="deleteBtn btn btn-danger" value="<?=$stud['studentID']?>">Delete</button>
                             </td>
                           </tr>
                         <?php endforeach;?>
@@ -83,7 +89,7 @@
                   
                   </div>
                   <div class="card-footer">
-                  <button type="button" onclick="addnew()" class="btn btn-success"> Add New Faculty</button>
+                  <button type="button" onclick="addnew()" class="btn btn-success"> Add New Student</button>
                   </div>
                 </div>
               </div>
@@ -127,35 +133,38 @@
         <div class="card">
           <div class="card-content">
             <div class="card-body">
-            <h4 class="text-center">Mr. <span id="profileName"></span>  Profile</h4>
+            <h4 class="text-center">It's. <span id="profileName"></span>  Profile</h4>
             <div class="row">
               <div class="col-md-5">
-                <p class="mt-2 mb-2">Faculty ID:</p>
+                <p class="mt-2 mb-2">LRN:</p>
                 <p class="mt-2 mb-2">First Name:</p>
                 <p class="mt-2 mb-2">Middle Name:</p>
                 <p class="mt-2 mb-2">Last Name:</p>
                 <p class="mt-2 mb-2">Age:</p>
                 <p class="mt-2 mb-2">Gender:</p>
                 <p class="mt-2 mb-2">Birthday:</p>
+                <p class="mt-2 mb-2">Address:</p>
+                <p class="mt-2 mb-2">Year:</p>
+                <p class="mt-2 mb-2">Section</p>
                 <p class="mt-2 mb-2">Role:</p>
-                <p class="mt-2 mb-2">Advisory:</p>
-                <p class="mt-2 mb-2">Year Assign:</p>
                 <p class="mt-2 mb-2">Username:</p>
                 <p class="mt-2 mb-2">Password:</p>
                 
               </div>
               <div class="col-md-6">
+                editstudentID
                 <p id="profileName" class="mt-2 mb-2"></p>
-                <p id="viewfacultyid" class="mt-2 mb-2"></p>
+                <p id="viewstudlrn" class="mt-2 mb-2"></p>
                 <p id="viewfname" class="mt-2 mb-2"></p>
                 <p id="viewmname" class="mt-2 mb-2"></p>
                 <p id="viewlname" class="mt-2 mb-2"></p>
                 <p id="viewage" class="mt-2 mb-2"></p>
                 <p id="viewgender" class="mt-2 mb-2"></p>
                 <p id="viewbirthday" class="mt-2 mb-2"></p>
+                <p id="viewaddress" class="mt-2 mb-2"></p>
+                <p id="viewyear" class="mt-2 mb-2"></p>
+                <p id="viewsection" class="mt-2 mb-2"></p>
                 <p id="viewrole" class="mt-2 mb-2"></p>
-                <p id="viewadvisory" class="mt-2 mb-2"></p>
-                <p id="viewyearassign" class="mt-2 mb-2"></p>
                 <p id="viewusername" class="mt-2 mb-2"></p>
                 <p id="viewpassword" class="mt-2 mb-2"></p>
               </div>
@@ -168,7 +177,6 @@
       <div class="modal-footer">
         <button id="editProBtn" class="btn btn-success">Edit</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Understood</button>
       </div>
     </div>
   </div>
@@ -186,41 +194,51 @@
         <div class="card">
           <div class="card-content">
             <div class="card-header">
-            <h1 class="text-center">Edi <span id="ediprofile"></span> Profile</h1>
+            <h1 class="text-center">Complete the form to add student profile</h1>
             </div>
             <div id="inserterror" class="alert alert-danger d-none"></div>
             <div id="insertsuccess" class="alert alert-success d-none"></div>
             <div class="card-body">
               <div class="row">
                 <div class="col-md-5">
-                <p class="mt-1 mb-4">Faculty ID:</p>
+                <p class="mt-1 mb-4">LRN:</p>
                 <p class="mt-1 mb-4">First Name:</p>
                 <p class="mt-1 mb-4">Middle Name:</p>
                 <p class="mt-1 mb-4">Last Name:</p>
-                <p class="mt-1 mb-3">Age:</p>
+                <p class="mt-1 mb-4">Age:</p>
                 <p class="mt-1 mb-4">Gender:</p>
                 <p class="mt-1 mb-4">Birthday:</p>
-                <p class="mt-1 mb-4">Role:</p>
-                <p class="mt-1 mb-4">Advisory:</p>
-                <p class="mt-1 mb-4">Year Assign:</p>
+                <p class="mt-1 mb-4">Address:</p>
+                <p class="mt-1 mb-3">Year:</p>
+                <p class="mt-1 mb-4">Section</p>
                 <p class="mt-1 mb-4">Username:</p>
                 <p class="mt-1 mb-4">Password:</p>
                 </div>
                 <div class="col-md-7">
-                <form id="insertFacultyForm" method="post">
-                  <input type="hidden"  name="facultyID" class="form-control mb-2">
-                  <input type="text" name="facultyNo" class="form-control mb-2">
-                  <input type="text"  name="fac_fname" class="form-control mb-2">
-                  <input type="text"  name="fac_mname" class="form-control mb-2">
-                  <input type="text" name="fac_lname" class="form-control mb-2">
-                  <input type="text" name="fac_age" class="form-control mb-2">
-                  <input type="text"  name="fac_gender" class="form-control mb-2">
-                  <input type="date"  name="fac_birthday" class="form-control mb-2">
-                  <input type="text" name="fac_role" class="form-control mb-2">
-                  <input type="text"  name="fac_advisory" class="form-control mb-2">
-                  <input type="text"  name="fac_yearlevel" class="form-control mb-2">
-                  <input type="text"  name="fac_username" class="form-control mb-2" >
-                  <input type="text"  name="fac_password" class="form-control mb-2" >
+                <form id="insertStudentForm" method="post">
+                  <input type="text" name="stud_lrn" class="form-control mb-2">
+                  <input type="text"  name="stud_fname" class="form-control mb-2">
+                  <input type="text"  name="stud_mname" class="form-control mb-2">
+                  <input type="text" name="stud_lname" class="form-control mb-2">
+                  <input type="text" name="stud_age" class="form-control mb-2">
+                  <select name="stud_gender"class="form-control mb-2">
+                    <option value="">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                  <input type="date"  name="stud_birthday" class="form-control mb-2">
+                  <input type="text" name="stud_address" class="form-control mb-2">
+                  <select name="stud_yearlevel" class="form-control mb-2">
+                    <option value="">Select</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                  </select>
+                  <input type="text"  name="stud_section" class="form-control mb-2">
+                  <input type="text"  name="stud_username" class="form-control mb-2" >
+                  <input type="text"  name="stud_password" class="form-control mb-2" >
+
                 </div>
               </div>
             </div>
@@ -232,7 +250,7 @@
 
         <button type="submit" class="btn btn-primary">Save</button>
         </form>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" onclick="closeBtn()" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -260,34 +278,36 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-md-5">
-                <p class="mt-1 mb-4">Faculty ID:</p>
+                <p class="mt-1 mb-4">LRN:</p>
                 <p class="mt-1 mb-4">First Name:</p>
                 <p class="mt-1 mb-4">Middle Name:</p>
                 <p class="mt-1 mb-4">Last Name:</p>
-                <p class="mt-1 mb-3">Age:</p>
+                <p class="mt-1 mb-4">Age:</p>
                 <p class="mt-1 mb-4">Gender:</p>
                 <p class="mt-1 mb-4">Birthday:</p>
+                <p class="mt-1 mb-4">Address:</p>
+                <p class="mt-1 mb-3">Year:</p>
+                <p class="mt-1 mb-4">Section</p>
                 <p class="mt-1 mb-4">Role:</p>
-                <p class="mt-1 mb-4">Advisory:</p>
-                <p class="mt-1 mb-4">Year Assign:</p>
                 <p class="mt-1 mb-4">Username:</p>
                 <p class="mt-1 mb-4">Password:</p>
                 </div>
                 <div class="col-md-7">
                 <form id="updateModalForm" method="post">
-                  <input type="hidden" id="editfacultyID" name="facultyID" class="form-control mb-2">
-                  <input type="text" id="editfacultyNo" name="facultyNo" class="form-control mb-2">
-                  <input type="text" id="editfac_fname" name="fac_fname" class="form-control mb-2">
-                  <input type="text" id="editfac_mname" name="fac_mname" class="form-control mb-2">
-                  <input type="text" id="editfac_lname" name="fac_lname" class="form-control mb-2">
-                  <input type="text" id="editfac_age" name="fac_age" class="form-control mb-2">
-                  <input type="text" id="editfac_gender" name="fac_gender" class="form-control mb-2">
-                  <input type="date" id="editfac_birthday" name="fac_birthday" class="form-control mb-2">
-                  <input type="text" id="editfac_role" name="fac_role" class="form-control mb-2">
-                  <input type="text" id="editfac_advisory" name="fac_advisory" class="form-control mb-2">
-                  <input type="text" id="editfac_yearlevel" name="fac_yearlevel" class="form-control mb-2">
-                  <input type="text" id="editfac_username" name="fac_username" class="form-control mb-2" >
-                  <input type="text" id="editfac_password" name="fac_password" class="form-control mb-2" >
+                  <input type="hidden" id="editstudentID" name="studentID" class="form-control mb-2">
+                  <input type="text" id="editstud_lrn" name="stud_lrn" class="form-control mb-2">
+                  <input type="text" id="editstud_fname" name="stud_fname" class="form-control mb-2">
+                  <input type="text" id="editstud_mname" name="stud_mname" class="form-control mb-2">
+                  <input type="text" id="editstud_lname" name="stud_lname" class="form-control mb-2">
+                  <input type="text" id="editstud_age" name="stud_age" class="form-control mb-2">
+                  <input type="text" id="ediststud_gender" name="stud_gender" class="form-control mb-2">
+                  <input type="date" id="editstud_birthday" name="stud_birthday" class="form-control mb-2">
+                  <input type="text" id="editstud_address" name="stud_address" class="form-control mb-2">
+                  <input type="text" id="editstud_yearlevel" name="stud_yearlevel" class="form-control mb-2">
+                  <input type="text" id="editstud_section" name="stud_section" class="form-control mb-2">
+                  <input type="text" id="editstud_role" name="stud_role" class="form-control mb-2" >
+                  <input type="text" id="editstud_username" name="stud_username" class="form-control mb-2" >
+                  <input type="text" id="editstud_password" name="stud_password" class="form-control mb-2" >
                 </div>
               </div>
             </div>
@@ -297,9 +317,9 @@
       </div>
       <div class="modal-footer">
 
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit"  class="btn btn-primary">Save</button>
         </form>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" onclick="closeBtn()" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -313,8 +333,14 @@
 
    <!-- AJAX SCRIPTS  -->
    <script>
-    // INSERT FACULTY 
-$(document).on('submit', '#insertFacultyForm', function(e){
+
+    function closeBtn()
+    {
+      $('#updatesuccess').addClass('d-none');
+      $('#updateerror').addClass('d-none');
+    }
+    // INSERT STUDENT 
+$(document).on('submit', '#insertStudentForm', function(e){
             e.preventDefault();
 
             var formData = new FormData(this);
@@ -322,7 +348,7 @@ $(document).on('submit', '#insertFacultyForm', function(e){
 
             $.ajax({
                 type: "POST",
-                url: "http://localhost/anhs/Admin/insertFac",
+                url: "http://localhost/anhsprojectnew/Admin/insertStud",
                 data: formData,
                 processData: false,
                 contentType: false,
@@ -338,12 +364,10 @@ $(document).on('submit', '#insertFacultyForm', function(e){
 
                     }else if(res.status == 200){
 
-                        $('#insertsuccess').removeClass('d-none');
-                        $('#inserterror').addClass('d-none');
-                        $('#insertsuccess').text(res.message);
+                        alert('Record successfully added.');
                         $('#insertModal').modal('show');
-                        $('#insertFacultyForm')[0].reset();
-                        $('#facultyTable').load(location.href + " #facultyTable");
+                        $('#insertStudentForm')[0].reset();
+                        $('#studentsTable').load(location.href + " #studentsTable");
                     }
             
                 }
@@ -371,14 +395,14 @@ $(document).on('submit', '#insertFacultyForm', function(e){
             // VIEW PROFILE 
         $(document).on('click', '.viewBtn', function () {
 
-        var facultyID = $(this).val();
+        var studentID = $(this).val();
         const id = {
-            'facultyID': facultyID,
+            'studentID': studentID,
         };
-        console.log(facultyID);
+        console.log(studentID);
         $.ajax({
             type: "POST",
-            url: "http://localhost/anhs/Admin/viewFacultyProfile",
+            url: "http://localhost/anhsprojectnew/Admin/viewStudentProfile",
             data: id, 
             // processData: false,
             success: function (response) {
@@ -390,21 +414,23 @@ $(document).on('submit', '#insertFacultyForm', function(e){
                     $('#facError').text(res.message);
                     
                 }else if(res.status == 200){
-                  
-                    $('#editProBtn').val(res.emp.facultyID);
-                    $('#profileName').text(res.emp.fac_fname);
-                    $('#viewfacultyid').text(res.emp.facultyNo);
-                    $('#viewfname').text(res.emp.fac_fname);
-                    $('#viewmname').text(res.emp.fac_mname);
-                    $('#viewlname').text(res.emp.fac_lname);
-                    $('#viewage').text(res.emp.fac_age);
-                    $('#viewgender').text(res.emp.fac_gender);
-                    $('#viewbirthday').text(res.emp.fac_birthday);
-                    $('#viewrole').text(res.emp.fac_role);
-                    $('#viewadvisory').text(res.emp.fac_advisory);
-                    $('#viewyearassign').text(res.emp.fac_yearlevel);
-                    $('#viewusername').text(res.emp.fac_username);
-                    $('#viewpassword').text(res.emp.fac_password);
+              
+
+                    $('#editProBtn').val(res.stud.studentID);
+                    $('#profileName').text(res.stud.stud_fname);
+                    $('#viewstudlrn').text(res.stud.stud_lrn);
+                    $('#viewfname').text(res.stud.stud_fname);
+                    $('#viewmname').text(res.stud.stud_mname);
+                    $('#viewlname').text(res.stud.stud_lname);
+                    $('#viewage').text(res.stud.stud_age);
+                    $('#viewgender').text(res.stud.stud_gender);
+                    $('#viewbirthday').text(res.stud.stud_birthday);
+                    $('#viewaddress').text(res.stud.stud_address);
+                    $('#viewyear').text(res.stud.stud_yearlevel);
+                    $('#viewsection').text(res.stud.stud_section);
+                    $('#viewrole').text(res.stud.std_role);
+                    $('#viewusername').text(res.stud.stud_username);
+                    $('#viewpassword').text(res.stud.stud_password);
                     $('#viewProfileModal').modal('show');
                 }
 
@@ -420,14 +446,14 @@ $(document).on('submit', '#insertFacultyForm', function(e){
              
         $(document).on('click', '.editBtn', function () {
 
-          var facultyID = $(this).val();
+          var studentID = $(this).val();
           const id = {
-              'facultyID': facultyID,
+              'studentID': studentID,
           };
-          console.log(facultyID);
+          console.log(studentID);
           $.ajax({
               type: "POST",
-              url: "http://localhost/anhs/Admin/viewFacultyProfile",
+              url: "http://localhost/anhsprojectnew/Admin/viewStudentProfile",
               data: id, 
               // processData: false,
               success: function (response) {
@@ -439,20 +465,22 @@ $(document).on('submit', '#insertFacultyForm', function(e){
                       $('#facError').text(res.message);
                       
                   }else if(res.status == 200){
-                     $('#ediprofile').text(res.emp.fac_fname);
-                      $('#editfacultyID').val(res.emp.facultyID);
-                      $('#editfacultyNo').val(res.emp.facultyNo);
-                      $('#editfac_fname').val(res.emp.fac_fname);
-                      $('#editfac_mname').val(res.emp.fac_mname);
-                      $('#editfac_lname').val(res.emp.fac_lname);
-                      $('#editfac_age').val(res.emp.fac_age);
-                      $('#editfac_gender').val(res.emp.fac_gender);
-                      $('#editfac_birthday').val(res.emp.fac_birthday);
-                      $('#editfac_role').val(res.emp.fac_role);
-                      $('#editfac_advisory').val(res.emp.fac_advisory);
-                      $('#editfac_yearlevel').val(res.emp.fac_yearlevel);
-                      $('#editfac_username').val(res.emp.fac_username);
-                      $('#editfac_password').val(res.emp.fac_password);
+
+                     $('#ediprofile').text(res.stud.stud_fname);
+                     $('#editstudentID').val(res.stud.studentID);
+                      $('#editstud_lrn').val(res.stud.stud_lrn);
+                      $('#editstud_fname').val(res.stud.stud_fname);
+                      $('#editstud_mname').val(res.stud.stud_mname);
+                      $('#editstud_lname').val(res.stud.stud_lname);
+                      $('#editstud_age').val(res.stud.stud_age);
+                      $('#ediststud_gender').val(res.stud.stud_gender);
+                      $('#editstud_birthday').val(res.stud.stud_birthday);
+                      $('#editstud_address').val(res.stud.stud_address);
+                      $('#editstud_yearlevel').val(res.stud.stud_yearlevel);
+                      $('#editstud_section').val(res.stud.stud_section);
+                      $('#editstud_role').val(res.stud.stud_role);
+                      $('#editstud_username').val(res.stud.stud_username);
+                      $('#editstud_password').val(res.stud.stud_password);
                       $('#editModal').modal('show');
                   }
 
@@ -460,6 +488,53 @@ $(document).on('submit', '#insertFacultyForm', function(e){
           });
 
           });
+
+          $(document).on('click', '#editProBtn', function () {
+
+var studentID = $(this).val();
+const id = {
+    'studentID': studentID,
+};
+console.log(studentID);
+$.ajax({
+    type: "POST",
+    url: "http://localhost/anhsprojectnew/Admin/viewStudentProfile",
+    data: id, 
+    // processData: false,
+    success: function (response) {
+
+        var res = jQuery.parseJSON(response);
+        console.log(res)
+        if(res.status == 500) {
+            $('#facError').removeClass('d-none');
+            $('#facError').text(res.message);
+            
+        }else if(res.status == 200){
+
+           $('#ediprofile').text(res.stud.stud_fname);
+           $('#editstudentID').text(res.stud.studentID);
+            $('#editstud_lrn').val(res.stud.stud_lrn);
+            $('#editstud_fname').val(res.stud.stud_fname);
+            $('#editstud_mname').val(res.stud.stud_mname);
+            $('#editstud_lname').val(res.stud.stud_lname);
+            $('#editstud_age').val(res.stud.stud_age);
+            $('#ediststud_gender').val(res.stud.stud_gender);
+            $('#editstud_birthday').val(res.stud.stud_birthday);
+            $('#editstud_address').val(res.stud.stud_address);
+            $('#editstud_yearlevel').val(res.stud.stud_yearlevel);
+            $('#editstud_section').val(res.stud.stud_section);
+            $('#editstud_role').val(res.stud.stud_role);
+            $('#editstud_username').val(res.stud.stud_username);
+            $('#editstud_password').val(res.stud.stud_password);
+            $('#editModal').modal('show');
+        }
+
+    }
+});
+
+});
+
+
 
           $(document).on('submit', '#updateModalForm', function(e){
             e.preventDefault();
@@ -469,7 +544,7 @@ $(document).on('submit', '#insertFacultyForm', function(e){
 
             $.ajax({
                 type: "POST",
-                url: "http://localhost/anhs/Admin/updateFaculty",
+                url: "http://localhost/anhsprojectnew/Admin/updateStudentData",
                 data: formData,
                 processData: false,
                 contentType: false,
@@ -489,7 +564,7 @@ $(document).on('submit', '#insertFacultyForm', function(e){
                         $('#updateerror').addClass('d-none');
                         $('#updatesuccess').text(res.message);
                         $('#editModal').modal('show');
-                        $('#facultyTable').load(location.href + " #facultyTable");
+                        $('#studentsTable').load(location.href + " #studentsTable");
                     }
             
                 }
@@ -502,13 +577,13 @@ $(document).on('submit', '#insertFacultyForm', function(e){
 
             if(confirm('Are you sure you want to delete this data?'))
             {
-                var facultyID = $(this).val();
+                var studentID = $(this).val();
                 $.ajax({
                     type: "POST",
-                    url: "http://localhost/anhs/Admin/delFaculty/",
+                    url: "http://localhost/anhsprojectnew/Admin/delStudent/",
                     data: {
-                        'delete_faculty': true,
-                        'facultyID': facultyID
+                        'delete_student': true,
+                        'studentID': studentID
                     },
                     success: function (response) {
 
@@ -517,9 +592,8 @@ $(document).on('submit', '#insertFacultyForm', function(e){
 
                             alert(res.message);
                         }else{
-                            $('#facSuccess').removeClass('d-none');
-                            $('#facSuccess').text(res.message);
-                            $('#facultyTable').load(location.href + " #facultyTable");
+                            alert('Deleting of records successful');
+                            $('#studentsTable').load(location.href + " #studentsTable");
                         }
                     }
                 });

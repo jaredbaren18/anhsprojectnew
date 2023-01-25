@@ -14,21 +14,26 @@
    <div class="container-fluid">
     <div class="row">
       <!-- NAVIGATION  -->
-      <div class="col-md-2 bg-success" style="height:100vh">
-      
+      <div class="col-md-2 bg-success text-center" style="height:100vh">
+    
       <nav class="justify-content-center text-center">
-        <ul class="nav-link ">
-          <li class="text-light p-2">Dashboard</li>
+        <ul class="nav-link mt-5 pt-5 ">
+          <li class="text-light p-2"><a href="<?=site_url('Admin/index')?>" class="nav-link">Dashboard</a></li>
           <li>
-          <div class="dropdown-center">
+          <div class="dropdown-cente mb-5">
             <a class="btn btn-success dropdown-toggle text-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               Accounts
 </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Faculty</a></li>
-              <li><a class="dropdown-item" href="#">Student</a></li>
+            <li><a class="dropdown-item" href="<?=site_url('Admin/facutltyAccounts')?>">Faculty</a></li>
+              <li><a class="dropdown-item" href="<?=site_url('Admin/studentAccounts')?>">Student</a></li>
+                  
             </ul>
           </div>
+          <h6 class="text-light">In session:</h6>
+          <h6 class="text-light"><?=$fac_role?></h6>
+          <h5 class="text-light"><?=$fac_fname?> <?=$fac_lname?></h5>
+          <li><a class="btn  btn-success" href="<?=site_url('Access/logoutAdmin')?>">Logout</a></li>
           </li>
         </ul>
       </nav>
@@ -36,17 +41,45 @@
       <!-- NAVIGATION END  -->
            <!-- BODY  -->
       <div class="col-md-10" style="height:100vh">
-
-      <h1>Dashboard</h1>
+      <div class="row">
+        <div class="col-md-11 mx-3 mt-3">
+         <div class="card">
+          <div class="card-content">
+            <div class="card-header">
+            <h1>Dashboard</h1>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4 p-3">
+                <div class="p-3 bg-danger text-light rounded">
+                  <h5>Total Accounts</h5>
+                  <h1><?=$accounts?></h1>
+                </div>
+                
+              </div>
+              <div class="col-md-4 p-3">
+              <div class="p-3 bg-warning rounded">
+                  <h5>Total Students</h5>
+                
+                  <h1><?=$students['totalstudents'];?></h1>
+                </div>
+              </div>
+              <div class="col-md-4 p-3">
+              <div class="p-3 bg-warning rounded">
+                  <h5>Total Employees</h5>
+                  <h1><?=$emp['totalfaculty']?></h1>
+                </div>
+              </div>
+            </div>
+          </div>
+         </div>
+        </div>
       </div>
-              <!-- END BODY  -->
-      <!-- NAVIGATION END  -->
- 
-      
-
-
-
     </div>
    </div>
+
+   </div>
+  </div>
+
 </body>
 </html>

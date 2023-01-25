@@ -2,6 +2,24 @@
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
 class Student extends Controller {
+    public function student()
+    {
+        if(!$this->session->has_userdata('stud_lrn'))
+        {
+            redirect('Access/student');
+
+        }
+        $data['stud_lrn']=$this->session->userdata('stud_lrn');
+        $data['stud_fname']=$this->session->userdata('stud_fname');
+        $data['stud_mname']=$this->session->userdata('stud_mname');
+        $data['stud_lname']=$this->session->userdata('stud_lname');
+        $data['stud_age']=$this->session->userdata('stud_age');
+        $data['stud_gender']=$this->session->userdata('stud_gender');
+        $data['stud_section']=$this->session->userdata('stud_section');
+        $data['stud_yearlevel']=$this->session->userdata('stud_yearlevel');
+        $data['stud_gender']=$this->session->userdata('stud_gender');
+        $this->call->view('student/index',$data);
+    }
     public function addStudent()
     {
         $stud_lrn=$this->io->post('stud_lrn');
@@ -62,6 +80,8 @@ class Student extends Controller {
             
         }
     }
+
+   
 	
 }
 ?>

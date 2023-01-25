@@ -23,6 +23,150 @@ class Faculty_model extends Model {
         ];
         return $this->db->table('tblstudent')->insert($data);
     }
+    public function userData($fac_no)
+    {
+        return $this->db->table('tblfaculty')->where('facultyNo',$fac_no)->get();
+    }
+    public function gradedStudents($sessvars)
+    {
+        $passed=
+        [
+            'remarks'=>'Passed',
+            'stud_facultyID'=>$sessvars
+        ];
+        $gradedP= $this->db->table('tblstudent')->select_count('remarks','Passed')->where($passed)->get();
+        $failed=
+        [
+            'remarks'=>'Failed',
+            'stud_facultyID'=>$sessvars
+        ];
+        $gradedF= $this->db->table('tblstudent')->select_count('remarks','Failed')->where($failed)->get();
+        $totalGradedStudent=$gradedF['Failed']+$gradedP['Passed'];
+        return $totalGradedStudent;
+    }
+    public function getAllPassedStudents($sessvars)
+    {
+        $data=
+        [
+            'remarks'=>'Passed',
+            'stud_facultyID'=>$sessvars
+        ];
+        return $this->db->table('tblstudent')->select_count('remarks','Passed')->where($data)->get();
+    }
+    public function getAllFailedStudents($sessvars)
+    {
+        $data=
+        [
+            'remarks'=>'Failed',
+            'stud_facultyID'=>$sessvars
+        ];
+        return $this->db->table('tblstudent')->select_count('remarks','Failed')->where($data)->get();
+    }
+    public function getAllActiveStudents($sessvars)
+    {
+        $data=
+        [
+            'status'=>'Active',
+            'stud_facultyID'=>$sessvars
+        ];
+        return $this->db->table('tblstudent')->select_count('status','Active')->where($data)->get();
+    }
+    public function getAllStudents($fac_no,$advisory)
+    {
+        $data=
+        [
+            'stud_facultyID'=>$fac_no,
+            'stud_section'=>$advisory
+        ];
+    
+        return $this->db->table('tblstudent')->select_count('studentID','studcount')->where($data)->get();
+    }
+    public function mydash($sessID)
+    {
+        return $this->db->table('tblfaculty')->where('facultyNo',$sessID)->get();
+    }
+    public function mystudents($facultyNo)
+    {
+        $data=[
+            'stud_facultyID'=>$facultyNo,
+        ];
+        return $this->db->table('tblstudent')->where($data)->get_all();
+    }
+
+    public function insertsubject($subjectname)
+    {
+        $data=['subjectname'=>$subjectname];
+        return $this->db->table('tblsubject')->insert($data);      
+    }
+    public function matchsubject($subjectname)
+    {
+        return $this->db->table('tblsubject')->where('subjectname',$subjectname)->get();   
+    }
+    public function getallsub()
+    {
+        return $this->db->table('tblsubject')->get_all();
+    }
+    public function section()
+    {
+        return $this->db->table('tblclass')->get_all();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // INSERT STUDENT FUNCTIONS
+    public function insertStudent($stud_lrn,$stud_fname,$stud_mname,$stud_lname,$stud_age,$stud_gender,$stud_birthday,$stud_address,$stud_yearlevel,$stud_section,$stud_role,$stud_username,$stud_password,$stud_facultyID)
+    {
+       $data=
+       [
+        'stud_lrn'=>$stud_lrn,
+        'stud_fname'=>$stud_fname,
+        'stud_mname'=>$stud_mname,
+        'stud_lname'=>$stud_lname,
+        'stud_age'=>$stud_age,
+        'stud_gender'=>$stud_gender,
+        'stud_birthday'=>$stud_birthday,
+        'stud_address'=>$stud_address,
+        'stud_yearlevel'=>$stud_yearlevel,
+        'stud_section'=>$stud_section,
+        'stud_role'=>$stud_role,
+        'stud_username'=>$stud_username,
+        'stud_password'=>$stud_password,
+        'stud_facultyID'=>$stud_facultyID,
+    ];
+    return $this->db->table('tblstudent')->insert($data);
+    }
+    public function uservalidate($stud_username)
+    {
+        $data=
+        [
+            'stud_username'=>$stud_username,
+
+        ];
+        return $this->db->table('tblstudent')->where($data)->get();
+    }
+    public function matchStudent($stud_lrn,$stud_fname,$stud_mname,$stud_lname)
+    {
+        $data=
+        [
+            'stud_lrn'=>$stud_lrn,
+            'stud_fname'=>$stud_fname,
+            'stud_mname'=>$stud_mname,
+            'stud_lname'=>$stud_lname
+        ];
+        return $this->db->table('tblstudent')->where($data)->get();
+    }
 	
 }
 ?>

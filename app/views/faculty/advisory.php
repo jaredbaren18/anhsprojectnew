@@ -7,7 +7,7 @@
   <title>ANHS| Faculty </title>
   <link rel="stylesheet" href="<?=base_url()?>/public/css/faculty.css">
   <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
-  <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
     <div class="container mx-auto" >
@@ -19,13 +19,13 @@
                 <ul class="navbar-nav" >
                   <li class="nav-item px-5 pt-2 pb-2">
                     <form action="<?=site_url('Faculty/myDash')?>" method="post">
-                      <input type="hidden"  name="facultyNo"value="<?=$facultyNo?>">
+                      <input type="hidden"  name="facultyNo"value="<?=$fac_no?>">
                       <input type="submit"  value="Dashboard" class="btn btn-success ">
                     </form>
                   </li>
                   <li class="nav-item px-4  pb-2">
                     <form action="<?=site_url('Faculty/myadvisory')?>" method="post">
-                      <input type="hidden"  name="facultyNo"value="<?=$facultyNo?>">
+                      <input type="hidden"  name="facultyNo"value="<?=$fac_no?>">
                       <input type="submit" value="My advisory" class="btn btn-success">
                     </form>
                   </li>
@@ -85,7 +85,7 @@
 
     <!-- Insert Students  -->
   <!-- Button trigger modal -->
-<div class="modal fade" id="viewStudentProfile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="inserstudentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-sm">
     <div class="modal-content">
       <div class="modal-header justify-content-center bg-primary " >
@@ -257,7 +257,7 @@
 
           });
           // DELETE STUDENT 
-          $(document).on('click', '.delBtn', function () {
+          $(document).on('click', '.deltblBtn', function () {
             if(confirm('Are you sure?'))
             var studentID = $(this).val();
             const id = {
@@ -283,27 +283,7 @@
             });
 
             });
-            $(document).on('click', '#deltblBtn', function () {
-            if(confirm('Are you sure?'))
-            $.ajax({
-              type: "POST",
-              url: "http://localhost/anhsprojectnew/Faculty/deleteTable",
-              data: "data",
-              dataType: "dataType",
-              success: function (response) {
-                    console.log(res)
-                    if(res.status == 500) {
-                      alert('ID not found!');
-                        
-                    }else if(res.status == 200){   
-                        alert('Table reset successfully!');               
-                        window.location.reload();
-                    }
-              }
-            });
-
-
-            });
+        
 
     
     </script>
