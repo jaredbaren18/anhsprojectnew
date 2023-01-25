@@ -19,13 +19,13 @@
                 <ul class="navbar-nav" >
                   <li class="nav-item px-5 pt-2 pb-2">
                     <form action="<?=site_url('Faculty/myDash')?>" method="post">
-                      <input type="hidden"  name="facultyNo"value="<?=$fac_no?>">
+                      <input type="hidden"  name="facultyNo"value="<?=$facultNo?>">
                       <input type="submit"  value="Dashboard" class="btn btn-success ">
                     </form>
                   </li>
                   <li class="nav-item px-4  pb-2">
                     <form action="<?=site_url('Faculty/myadvisory')?>" method="post">
-                      <input type="hidden"  name="facultyNo"value="<?=$fac_no?>">
+                      <input type="hidden"  name="facultyNo"value="<?=$facultNo?>">
                       <input type="submit" value="My advisory" class="btn btn-success">
                     </form>
                   </li>

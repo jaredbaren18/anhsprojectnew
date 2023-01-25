@@ -102,10 +102,6 @@ class Faculty_model extends Model {
     {
         return $this->db->table('tblsubject')->where('subjectname',$subjectname)->get();   
     }
-    public function getallsub()
-    {
-        return $this->db->table('tblsubject')->get_all();
-    }
     public function section()
     {
         return $this->db->table('tblclass')->get_all();
@@ -126,7 +122,8 @@ class Faculty_model extends Model {
 
 
     // INSERT STUDENT FUNCTIONS
-    public function insertStudent($stud_lrn,$stud_fname,$stud_mname,$stud_lname,$stud_age,$stud_gender,$stud_birthday,$stud_address,$stud_yearlevel,$stud_section,$stud_role,$stud_username,$stud_password,$stud_facultyID)
+    
+    public function insertstudent($stud_lrn,$stud_fname,$stud_mname,$stud_lname,$stud_age,$stud_gender,$stud_birthday,$stud_address,$stud_yearlevel,$stud_section,$stud_role,$stud_username,$stud_password,$stud_facultyID)
     {
        $data=
        [
@@ -166,6 +163,28 @@ class Faculty_model extends Model {
             'stud_lname'=>$stud_lname
         ];
         return $this->db->table('tblstudent')->where($data)->get();
+    }
+    public function truncTable()
+    {
+        $data=
+        [
+            'faculty'=>$facultyNo,
+            'fac_advisory'=>$fac_advisory
+        ];
+        return $this->db->table('tblstudent')->where($data)->delete();
+    }
+    public function studmatchID($studentID)
+    {
+     return $this->db->table('tblstudent')->where('studentID',$studentID)->get();   
+    }
+    public function insertGrade($studentID)
+    {
+     return $this->db->table('tblstudent')->where('studentID',$studentID)->get();   
+    }
+
+    public function getallsub()
+    {
+        return $this->db->table('tblsubject')->get_all();
     }
 	
 }

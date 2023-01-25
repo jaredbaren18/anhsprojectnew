@@ -14,18 +14,18 @@
   <div class="container-fluid bg-success p-3">
     <h5 class="text-light"> AURORA NATIONAL HIGH SCHOOL</h5>
   </div>
-  <div class="container-fluid">
+  <div class="container-fluid ">
     <h1 class="text-center p-3">STUDENT CARD VIEWER</h1>
 </div>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-6 bg-success">
+    <div class="col-md-8 bg-success"style="height:85vh">
 
     </div>
-    <div class="col-md-6 bg-warning">
+    <div class="col-md-4 bg-warning">
       <div class="p-5">
       <form id="facultyLoginForm" action="<?=site_url('Access/studentLogin')?>" method="post">
-        <div class="p-5 mx-5">
+        <div class="p-5 text-enter">
             <h1>Student Login</h1>
             <?php $LAVA=lava_instance();?>
             <?php if(!empty($LAVA->session->flashdata('invalid'))):?>

@@ -19,13 +19,13 @@
                 <ul class="navbar-nav" >
                   <li class="nav-item px-5 pt-2 pb-2">
                     <form action="<?=site_url('Faculty/myDash')?>" method="post">
-                      <input type="hidden"  name="facultyNo"value="<?=$fac_no?>">
+                      <input type="hidden"  name="facultyNo"value="<?=$facultNo?>">
                       <input type="submit"  value="Dashboard" class="btn btn-success ">
                     </form>
                   </li>
                   <li class="nav-item px-4  pb-2">
                     <form action="<?=site_url('Faculty/myadvisory')?>" method="post">
-                      <input type="hidden"  name="facultyNo"value="<?=$fac_no?>">
+                      <input type="hidden"  name="facultyNo"value="<?=$facultNo?>">
                       <input type="submit" value="My advisory" class="btn btn-success">
                     </form>
                   </li>
@@ -37,7 +37,7 @@
                 <b><?=$fac_fname?> <?=$fac_lname?></b>
               
               </nav>
-              <a href="<?=site_url('Access/logoutfac')?>" class="text-danger">Logout</a>
+              <a href="<?=site_url('Access/logoutTeacher')?>" class="text-danger">Logout</a>
             </div>  
           </div>
           <div class="col-md-10 px-5" style="height:80vh">
@@ -58,7 +58,20 @@
                 <td><?=$student['studentID']?></td>
                 <td><?=$student['stud_lrn']?></td>
                 <td><?=$student['stud_fname']?> <?=$student['stud_mname']?> <?=$student['stud_lname']?></td>
-                <td><button  value="<?=$student['studentID']?>" class="viewbtn btn btn-success">Profile</button> <button  value="<?=$student['studentID']?>" class="delBtn btn btn-danger">Delete</button> 
+                  <td>
+                    <form action="" method="post">
+                      <input type="hidden" name="studentID" value="<?=$student['studentID']?>">
+                      <input type="submit" class="btn btn-warning float-end" value="Edit Grade">
+                    </form>
+                    <form action=" <?=site_url('Faculty/addGrade')?>"  method="post">
+                      <input type="hidden" name="studentID" value="<?=$student['studentID']?>">
+                      <input type="submit" class="btn btn-success mx-1 float-end" value="Edit Grade">
+                    </form>
+                    <form action=""  method="post">
+                      <input type="hidden" name="studentID" value="<?=$student['studentID']?>">
+                      <input type="submit" class="btn btn-danger float-end" value="Delete">
+                    </form>
+                  </td>
               </tr>
               <?php endforeach;?>
             </tbody>
@@ -66,10 +79,9 @@
            </div>
          <div class="card mx-3 mt-3" style="height:10vh">
           <div class="card-body">
-          <button type="button" class="btn btn-success float-end mx-3" data-bs-toggle="modal" data-bs-target="#export">Export</button>
           <button type="button" id="deltblBtn" class="btn btn-danger float-end mx-3" data-bs-toggle="modal" data-bs-target="#Resettable">Delete Class Table</button>
-          <button type="button" onclick="insertBtnModal()" class="btn btn-warning float-end mx-3" >Add Students</button>
-      
+         <a href="<?=site_url('Faculty/addStudentview')?>" class="btn btn-warning float-end">Add Student</a>
+        </form>
           
           </div>
         
@@ -257,32 +269,32 @@
 
           });
           // DELETE STUDENT 
-          $(document).on('click', '.deltblBtn', function () {
-            if(confirm('Are you sure?'))
-            var studentID = $(this).val();
-            const id = {
-                'studentID': studentID,
-            };
-            console.log(studentID);
-            $.ajax({
-                type: "POST",
-                url: "http://localhost/anhsprojectnew/Student/deleteProfile",
-                data: id, 
-                // processData: false,
-                success: function (response) {
-                    var res = jQuery.parseJSON(response);
-                    console.log(res)
-                    if(res.status == 500) {
-                      alert('ID not found!');
+          // $(document).on('click', '.deltblBtn', function () {
+          //   if(confirm('Are you sure?'))
+          //   var studentID = $(this).val();
+          //   const id = {
+          //       'studentID': studentID,
+          //   };
+          //   console.log(studentID);
+          //   $.ajax({
+          //       type: "POST",
+          //       url: "http://localhost/anhsprojectnew/Student/deleteProfile",
+          //       data: id, 
+          //       // processData: false,
+          //       success: function (response) {
+          //           var res = jQuery.parseJSON(response);
+          //           console.log(res)
+          //           if(res.status == 500) {
+          //             alert('ID not found!');
                         
-                    }else if(res.status == 200){   
-                        alert('Deleting of records successfull!');               
-                        window.location.reload();
-                    }
-                }
-            });
+          //           }else if(res.status == 200){   
+          //               alert('Deleting of records successfull!');               
+          //               window.location.reload();
+          //           }
+          //       }
+          //   });
 
-            });
+          //   });
         
 
     

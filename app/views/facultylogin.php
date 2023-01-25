@@ -19,13 +19,13 @@
 </div>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-6 bg-success">
+    <div class="col-md-8 bg-success">
 
     </div>
-    <div class="col-md-6 bg-warning">
+    <div class="col-md-4 bg-warning " style="height:85vh">
       <div class="p-5">
       <form id="facultyLoginForm" action="<?=site_url('Access/facultyLogin')?>" method="post">
-        <div class="p-5 mx-5">
+        <div class="p-5 ">
       
             <h1>Faculty Login</h1>
            <?php $LAVA =lava_instance();?>
